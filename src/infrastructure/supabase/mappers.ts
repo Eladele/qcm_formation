@@ -20,6 +20,7 @@ export interface QuizRow {
   title: string;
   description: string;
   duration_seconds: number;
+  question_duration_seconds?: number | null;
   scoring_mode: ScoringMode;
   max_attempts: number;
   show_correction: boolean;
@@ -35,6 +36,8 @@ export interface QuestionRow {
   statement: string;
   points: number | string;
   position: number;
+  image_url?: string | null;
+  duration_seconds?: number | null;
   choices: { id: string; label: string; is_correct: boolean; position: number }[];
 }
 
@@ -72,6 +75,7 @@ export const QuizMapper = {
       title: row.title,
       description: row.description,
       durationSeconds: row.duration_seconds,
+      questionDurationSeconds: numOrNull(row.question_duration_seconds),
       scoringMode: row.scoring_mode,
       maxAttempts: row.max_attempts,
       showCorrection: row.show_correction,
@@ -86,6 +90,7 @@ export const QuizMapper = {
       title: d.title,
       description: d.description,
       duration_seconds: d.durationSeconds,
+      question_duration_seconds: d.questionDurationSeconds ?? null,
       scoring_mode: d.scoringMode,
       max_attempts: d.maxAttempts,
       show_correction: d.showCorrection,
@@ -102,6 +107,8 @@ export const QuestionMapper = {
       statement: row.statement,
       points: num(row.points),
       position: row.position,
+      imageUrl: row.image_url ?? null,
+      durationSeconds: numOrNull(row.duration_seconds),
       choices: [...row.choices]
         .sort((a, b) => a.position - b.position)
         .map((c) => ({ id: c.id, label: c.label, isCorrect: c.is_correct, position: c.position })),
@@ -143,10 +150,13 @@ export const AttemptMapper = {
   session(
     json: Omit<AttemptSessionData, 'selected' | 'clockOffsetMs' | 'questions'> & {
       serverNow: string;
+      questionDurationSeconds?: number | null;
       questions: {
         id: string;
         statement: string;
         points: number | string;
+        imageUrl?: string | null;
+        durationSeconds?: number | null;
         choices: { id: string; label: string }[];
         selectedChoiceIds: string[];
       }[];
@@ -161,11 +171,14 @@ export const AttemptMapper = {
       startedAt: json.startedAt,
       expiresAt: json.expiresAt,
       durationSeconds: json.durationSeconds,
+      questionDurationSeconds: numOrNull(json.questionDurationSeconds),
       clockOffsetMs,
       questions: json.questions.map((q) => ({
         id: q.id,
         statement: q.statement,
         points: num(q.points),
+        imageUrl: q.imageUrl ?? null,
+        durationSeconds: numOrNull(q.durationSeconds),
         choices: q.choices ?? [],
       })),
       selected: Object.fromEntries(json.questions.map((q) => [q.id, q.selectedChoiceIds ?? []])),
@@ -181,7 +194,11 @@ export const AttemptMapper = {
       ...json,
       score: num(json.score),
       maxScore: num(json.maxScore),
-      questions: (json.questions ?? []).map((q) => ({ ...q, points: num(q.points) })),
+      questions: (json.questions ?? []).map((q) => ({
+        ...q,
+        points: num(q.points),
+        imageUrl: q.imageUrl ?? null,
+      })),
     };
   },
 };

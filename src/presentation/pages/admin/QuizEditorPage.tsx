@@ -157,18 +157,25 @@ export function QuizEditorPage() {
               <header className="question-head">
                 <span className="question-index">Q{i + 1}</span>
                 <Badge>{formatPoints(q.points)} pt</Badge>
+                {q.durationSeconds && <Badge tone="warning">⏱️ {q.durationSeconds} s</Badge>}
+                {q.imageUrl && <Badge tone="accent">📷 Image</Badge>}
                 <Badge tone="accent">{q.choices.filter((c) => c.isCorrect).length} bonne(s) réponse(s)</Badge>
                 <span className="spacer" />
                 <button className="btn btn-ghost btn-sm" onClick={() => { setFormError(null); setEditing({ mode: 'edit', question: q }); }}>Modifier</button>
                 <button className="btn btn-ghost btn-sm danger-text" onClick={() => setToDelete(q)}>Supprimer</button>
               </header>
+              {q.imageUrl && (
+                <div className="question-admin-image-wrap">
+                  <img src={q.imageUrl} alt="Illustration de la question" className="question-admin-image" />
+                </div>
+              )}
               <p className="strong">{q.statement}</p>
               <ul className="choice-preview">
                 {q.choices.map((c, ci) => (
                   <li key={c.id} className={c.isCorrect ? 'correct' : ''}>
                     <span className="choice-letter">{CHOICE_LETTERS[ci]}</span>
                     {c.label}
-                    {c.isCorrect && <span className="answer-tag">✓ Vrai</span>}
+                    {c.isCorrect && <span className="answer-tag">✓ Bonne réponse</span>}
                   </li>
                 ))}
               </ul>
@@ -184,6 +191,7 @@ export function QuizEditorPage() {
             initial={editing.mode === 'edit' ? QuestionDraftFactory.fromQuestion(editing.question) : undefined}
             busy={busy}
             serverError={formError}
+            onUploadImage={(file) => admin.uploadQuestionImage(file)}
             onSubmit={saveQuestion}
             onCancel={() => setEditing(null)}
           />

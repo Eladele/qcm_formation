@@ -31,6 +31,8 @@ export interface QuestionRepository {
   /** Crée (questionId absent) ou met à jour une question et ses 4 choix de façon atomique. */
   save(quizId: string, draft: QuestionDraft, questionId?: string): Promise<string>;
   delete(questionId: string): Promise<void>;
+  /** Téléverse une image associée à une question dans Supabase Storage et renvoie son URL publique. */
+  uploadImage(file: File): Promise<string>;
 }
 
 export interface AttemptGateway {

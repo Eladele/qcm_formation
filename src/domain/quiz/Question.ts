@@ -27,6 +27,8 @@ export interface Question {
   readonly statement: string;
   readonly points: number;
   readonly position: number;
+  readonly imageUrl?: string | null;
+  readonly durationSeconds?: number | null;
   readonly choices: readonly Choice[];
 }
 
@@ -39,6 +41,8 @@ export interface ChoiceDraft {
 export interface QuestionDraft {
   readonly statement: string;
   readonly points: number;
+  readonly imageUrl?: string | null;
+  readonly durationSeconds?: number | null;
   readonly choices: readonly ChoiceDraft[];
 }
 
@@ -53,6 +57,8 @@ export const QuestionDraftFactory = {
     return {
       statement: '',
       points: 1,
+      imageUrl: null,
+      durationSeconds: null,
       choices: Array.from({ length: QUESTION_RULES.CHOICES_COUNT }, () => ({ label: '', isCorrect: false })),
     };
   },
@@ -61,6 +67,8 @@ export const QuestionDraftFactory = {
     return {
       statement: question.statement,
       points: question.points,
+      imageUrl: question.imageUrl ?? null,
+      durationSeconds: question.durationSeconds ?? null,
       choices: [...question.choices]
         .sort((a, b) => a.position - b.position)
         .map((c) => ({ label: c.label, isCorrect: c.isCorrect })),
@@ -71,6 +79,8 @@ export const QuestionDraftFactory = {
     return {
       statement: draft.statement.trim(),
       points: Math.round(draft.points * 100) / 100,
+      imageUrl: draft.imageUrl?.trim() || null,
+      durationSeconds: draft.durationSeconds ? Math.round(draft.durationSeconds) : null,
       choices: draft.choices.map((c) => ({ label: c.label.trim(), isCorrect: c.isCorrect })),
     };
   },
@@ -81,6 +91,14 @@ export const QuestionDraftFactory = {
 
   withPoints(draft: QuestionDraft, points: number): QuestionDraft {
     return { ...draft, points };
+  },
+
+  withImageUrl(draft: QuestionDraft, imageUrl: string | null): QuestionDraft {
+    return { ...draft, imageUrl };
+  },
+
+  withDurationSeconds(draft: QuestionDraft, durationSeconds: number | null): QuestionDraft {
+    return { ...draft, durationSeconds };
   },
 
   withChoiceLabel(draft: QuestionDraft, index: number, label: string): QuestionDraft {

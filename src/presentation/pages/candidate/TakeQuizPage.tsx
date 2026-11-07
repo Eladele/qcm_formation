@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { QuestionNavigator } from '../../components/QuestionNavigator';
+import { QuestionTimer } from '../../components/QuestionTimer';
 import { QuestionView } from '../../components/QuestionView';
 import { Timer } from '../../components/Timer';
 import { Alert, ConfirmDialog, Spinner } from '../../components/ui';
@@ -14,6 +15,19 @@ export function TakeQuizPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const onExpire = useCallback(() => void submit('timeout'), [submit]);
 
+  const session = state.session;
+  const questions = session?.data.questions ?? [];
+  const question = questions[state.current];
+  const questionDuration = question?.durationSeconds ?? session?.data.questionDurationSeconds ?? null;
+
+  const handleQuestionExpire = useCallback(() => {
+    if (state.current < questions.length - 1) {
+      goTo(state.current + 1);
+    } else {
+      void submit('timeout');
+    }
+  }, [state.current, questions.length, goTo, submit]);
+
   // Avertit avant de quitter la page pendant le test
   useEffect(() => {
     if (state.phase !== 'active') return;
@@ -22,16 +36,16 @@ export function TakeQuizPage() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [state.phase]);
 
-  // Navigation clavier ← →
+  // Navigation clavier ← → (désactivée en mode chronomètre par question pour éviter de tricher)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (confirmOpen || (e.target as HTMLElement).tagName === 'INPUT') return;
       if (e.key === 'ArrowRight') goTo(state.current + 1);
-      if (e.key === 'ArrowLeft') goTo(state.current - 1);
+      if (e.key === 'ArrowLeft' && !questionDuration) goTo(state.current - 1);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [goTo, state.current, confirmOpen]);
+  }, [goTo, state.current, confirmOpen, questionDuration]);
 
   if (state.phase === 'loading') return <Spinner full label="Préparation du test…" />;
   if (state.phase === 'error') return <Alert>{state.error}</Alert>;
@@ -39,9 +53,7 @@ export function TakeQuizPage() {
     return <Navigate to={`/attempt/${attemptId}/result`} replace state={{ reason: state.closedReason }} />;
   }
 
-  const session = state.session!;
-  const { questions, quizTitle, durationSeconds } = session.data;
-  const question = questions[state.current];
+  const { quizTitle, durationSeconds } = session!.data;
   const unanswered = questions.length - state.answers.answeredCount;
   const locked = state.phase === 'submitting';
 
@@ -56,7 +68,7 @@ export function TakeQuizPage() {
             <span className={`sync sync-${state.sync}`}>● {SYNC_LABEL[state.sync]}</span>
           </div>
         </div>
-        <Timer deadlineMs={session.deadlineMs} clock={session.clock} totalSeconds={durationSeconds} onExpire={onExpire} />
+        <Timer deadlineMs={session!.deadlineMs} clock={session!.clock} totalSeconds={durationSeconds} onExpire={onExpire} />
       </header>
 
       {state.error && <Alert>{state.error}</Alert>}
@@ -65,6 +77,15 @@ export function TakeQuizPage() {
 
       <div className="take-body">
         <section>
+          {questionDuration && (
+            <QuestionTimer
+              key={question?.id ?? state.current}
+              durationSeconds={questionDuration}
+              questionIndex={state.current}
+              onExpire={handleQuestionExpire}
+            />
+          )}
+
           {question && (
             <QuestionView
               question={question}
@@ -76,18 +97,32 @@ export function TakeQuizPage() {
             />
           )}
           <div className="pager">
-            <button className="btn btn-ghost" disabled={state.current === 0} onClick={() => goTo(state.current - 1)}>← Précédente</button>
+            {!questionDuration && (
+              <button className="btn btn-ghost" disabled={state.current === 0} onClick={() => goTo(state.current - 1)}>
+                ← Précédente
+              </button>
+            )}
             {state.current < questions.length - 1 ? (
-              <button className="btn btn-secondary" onClick={() => goTo(state.current + 1)}>Suivante →</button>
+              <button className="btn btn-primary" onClick={() => goTo(state.current + 1)}>
+                Passer à la question suivante →
+              </button>
             ) : (
-              <button className="btn btn-primary" disabled={locked} onClick={() => setConfirmOpen(true)}>Terminer le test</button>
+              <button className="btn btn-primary" disabled={locked} onClick={() => setConfirmOpen(true)}>
+                Terminer le test
+              </button>
             )}
           </div>
         </section>
 
         <aside className="card side-panel">
           <h3>Questions</h3>
-          <QuestionNavigator questions={questions} answers={state.answers} current={state.current} onSelect={goTo} />
+          <QuestionNavigator
+            questions={questions}
+            answers={state.answers}
+            current={state.current}
+            onSelect={goTo}
+            disableNavigation={!!questionDuration}
+          />
           <div className="legend">
             <span><i className="dot answered" /> Répondue</span>
             <span><i className="dot" /> Sans réponse</span>

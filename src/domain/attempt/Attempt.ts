@@ -9,6 +9,8 @@ export interface SessionQuestion {
   readonly id: string;
   readonly statement: string;
   readonly points: number;
+  readonly imageUrl?: string | null;
+  readonly durationSeconds?: number | null;
   readonly choices: readonly { readonly id: string; readonly label: string }[];
 }
 
@@ -20,6 +22,7 @@ export interface AttemptSessionData {
   readonly startedAt: string;
   readonly expiresAt: string;
   readonly durationSeconds: number;
+  readonly questionDurationSeconds?: number | null;
   readonly questions: readonly SessionQuestion[];
   readonly selected: Readonly<Record<string, readonly string[]>>;
   /** Décalage horloge serveur − horloge locale (ms), mesuré par l'infrastructure. */
@@ -110,6 +113,7 @@ export interface ResultQuestion {
   readonly id: string;
   readonly statement: string;
   readonly points: number;
+  readonly imageUrl?: string | null;
   readonly choices: readonly ResultChoice[];
 }
 

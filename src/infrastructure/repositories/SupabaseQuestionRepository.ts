@@ -15,12 +15,25 @@ export class SupabaseQuestionRepository implements QuestionRepository {
     const rows = await call<QuestionRow[]>(() =>
       this.db
         .from('questions')
-        .select('id, quiz_id, statement, points, position, choices(id, label, is_correct, position)')
+        .select('id, quiz_id, statement, points, position, image_url, duration_seconds, choices(id, label, is_correct, position)')
         .eq('quiz_id', quizId)
         .order('position', { ascending: true })
         .order('created_at', { ascending: true }),
     );
     return rows.map(QuestionMapper.toDomain);
+  }
+
+  /** Téléverse une image dans le bucket question-images et renvoie son URL publique. */
+  async uploadImage(file: File): Promise<string> {
+    const ext = file.name.split('.').pop() || 'png';
+    const fileName = `${crypto.randomUUID()}.${ext}`;
+    const { error } = await this.db.storage.from('question-images').upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false,
+    });
+    if (error) throw error;
+    const { data } = this.db.storage.from('question-images').getPublicUrl(fileName);
+    return data.publicUrl;
   }
 
   /** Passe par la RPC transactionnelle save_question (question + 4 choix en une fois). */
@@ -32,6 +45,8 @@ export class SupabaseQuestionRepository implements QuestionRepository {
         p_statement: draft.statement,
         p_points: draft.points,
         p_choices: draft.choices.map((c) => ({ label: c.label, isCorrect: c.isCorrect })),
+        p_image_url: draft.imageUrl ?? null,
+        p_duration_seconds: draft.durationSeconds ?? null,
       }),
     );
   }

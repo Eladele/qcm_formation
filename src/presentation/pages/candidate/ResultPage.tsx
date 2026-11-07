@@ -68,6 +68,11 @@ export function ResultPage() {
               </Badge>
             </header>
             <h3>{q.statement}</h3>
+            {q.imageUrl && (
+              <div className="question-image-wrap">
+                <img src={q.imageUrl} alt="Illustration de la question" className="question-image" />
+              </div>
+            )}
             <ul className="answer-list">
               {q.choices.map((c, ci) => {
                 const kind = c.isCorrect ? (c.selected ? 'hit' : 'missed') : c.selected ? 'wrong' : 'neutral';

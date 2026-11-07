@@ -8,6 +8,7 @@ export interface Quiz {
   readonly title: string;
   readonly description: string;
   readonly durationSeconds: number;
+  readonly questionDurationSeconds?: number | null;
   readonly scoringMode: ScoringMode;
   readonly maxAttempts: number;
   readonly showCorrection: boolean;
@@ -20,7 +21,9 @@ export interface Quiz {
 export type QuizDraft = Pick<
   Quiz,
   'title' | 'description' | 'durationSeconds' | 'scoringMode' | 'maxAttempts' | 'showCorrection' | 'shuffle'
->;
+> & {
+  readonly questionDurationSeconds?: number | null;
+};
 
 export const QUIZ_RULES = {
   TITLE_MIN: 3,
@@ -37,6 +40,7 @@ export const QuizDraftFactory = {
       title: '',
       description: '',
       durationSeconds: 30 * 60,
+      questionDurationSeconds: null,
       scoringMode: 'all_or_nothing',
       maxAttempts: 1,
       showCorrection: true,
@@ -44,11 +48,17 @@ export const QuizDraftFactory = {
     };
   },
   fromQuiz(q: Quiz): QuizDraft {
-    const { title, description, durationSeconds, scoringMode, maxAttempts, showCorrection, shuffle } = q;
-    return { title, description, durationSeconds, scoringMode, maxAttempts, showCorrection, shuffle };
+    const { title, description, durationSeconds, questionDurationSeconds, scoringMode, maxAttempts, showCorrection, shuffle } = q;
+    return { title, description, durationSeconds, questionDurationSeconds: questionDurationSeconds ?? null, scoringMode, maxAttempts, showCorrection, shuffle };
   },
   normalize(d: QuizDraft): QuizDraft {
-    return { ...d, title: d.title.trim(), description: d.description.trim(), durationSeconds: Math.round(d.durationSeconds) };
+    return {
+      ...d,
+      title: d.title.trim(),
+      description: d.description.trim(),
+      durationSeconds: Math.round(d.durationSeconds),
+      questionDurationSeconds: d.questionDurationSeconds ? Math.round(d.questionDurationSeconds) : null,
+    };
   },
 };
 

@@ -85,6 +85,10 @@ export class QuizAdminService {
     return this.questions.listByQuiz(quizId);
   }
 
+  uploadQuestionImage(file: File): Promise<string> {
+    return this.questions.uploadImage(file);
+  }
+
   async saveQuestion(quizId: string, draft: QuestionDraft, questionId?: string): Promise<string> {
     const normalized = QuestionDraftFactory.normalize(draft);
     questionValidator.assertValid(normalized);

@@ -43,10 +43,26 @@ export function QuizSettingsForm({ initial, submitLabel, busy, serverError, onSu
           placeholder="Consignes affichées au candidat avant de commencer" />
       </div>
 
-      <div className="field">
-        <label>Durée du test</label>
-        <DurationInput value={draft.durationSeconds} invalid={!!err('durationSeconds')} onChange={(s) => set('durationSeconds', s)} />
-        {err('durationSeconds') && <p className="field-error">{err('durationSeconds')}</p>}
+      <div className="grid-2">
+        <div className="field">
+          <label>Durée totale du test</label>
+          <DurationInput value={draft.durationSeconds} invalid={!!err('durationSeconds')} onChange={(s) => set('durationSeconds', s)} />
+          {err('durationSeconds') && <p className="field-error">{err('durationSeconds')}</p>}
+        </div>
+
+        <div className="field">
+          <label htmlFor="questionDurationSeconds">Temps par question (optionnel)</label>
+          <input
+            id="questionDurationSeconds"
+            type="number"
+            min={10}
+            max={3600}
+            placeholder="Ex : 60 (1 min) ou 120 (2 min)"
+            value={draft.questionDurationSeconds ?? ''}
+            onChange={(e) => set('questionDurationSeconds', e.target.value ? Number(e.target.value) : null)}
+          />
+          <span className="hint">Chronomètre qui passe automatiquement à la question suivante</span>
+        </div>
       </div>
 
       <div className="grid-2">

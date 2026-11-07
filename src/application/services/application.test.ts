@@ -50,6 +50,7 @@ describe('QuizAdminService', () => {
     async listByQuiz() { return list; },
     async save(_q, d) { this.saved.push(d); return 'new-id'; },
     async delete() {},
+    async uploadImage() { return 'https://example.com/fake.png'; },
   });
   const fakeQuizzes = { async setPublished() {} } as unknown as QuizRepository;
   const assignments = (ids: string[]): AssignmentRepository => ({ async listCandidateIds() { return ids; }, async replace() {} });

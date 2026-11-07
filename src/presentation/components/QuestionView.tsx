@@ -22,6 +22,11 @@ export function QuestionView({ question, index, total, answers, disabled, onTogg
         <span className="badge badge-neutral">{formatPoints(question.points)} pt</span>
       </header>
       <h2 className="question-statement">{question.statement}</h2>
+      {question.imageUrl && (
+        <div className="question-image-wrap">
+          <img src={question.imageUrl} alt="Illustration de la question" className="question-image" />
+        </div>
+      )}
       <p className="hint">
         Cochez entre 1 et {MAX_SELECTIONS_PER_QUESTION} réponses — au moins une proposition est fausse.
         <span className="selection-count"> {selectedCount} sélectionnée(s)</span>
