@@ -307,12 +307,265 @@ label.answer:hover { border-color: #c7cbff; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .editor-layout, .take-body { grid-template-columns: 1fr; }
-  .editor-layout > aside, .side-panel { position: static; }
-  .take-header { flex-direction: column; align-items: stretch; top: 58px; }
-  .stats { grid-template-columns: 1fr; }
-  .choice-preview { grid-template-columns: 1fr; }
-  .container { padding: 16px; }
-  .topbar { padding: 10px 16px; gap: 12px; }
-  .user-name { display: none; }
+  .editor-layout, .take-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .editor-layout > aside, .side-panel {
+    position: static;
+    top: auto;
+  }
+  .take-header {
+    flex-direction: column;
+    align-items: stretch;
+    top: 56px;
+    gap: 12px;
+    padding: 14px;
+  }
+  .take-header .timer {
+    min-width: 0;
+    width: 100%;
+  }
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  .choice-preview {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 16px 14px;
+  }
+  .topbar {
+    padding: 10px 14px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.35rem; }
+  h2 { font-size: 1.1rem; }
+  .card { padding: 14px; border-radius: var(--radius-sm); }
+  
+  /* Topbar mobile */
+  .topbar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .brand {
+    font-size: 1rem;
+    gap: 6px;
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+  .topnav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .topnav a {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .userbox {
+    gap: 6px;
+  }
+  .userbox .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  
+  /* Headings & Page head */
+  .page-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .page-head .row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .page-head .row .btn {
+    width: 100%;
+  }
+
+  /* Form layouts */
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  .form-actions .btn {
+    width: 100%;
+  }
+  
+  /* Choice editor in QuestionForm */
+  .choice-row {
+    grid-template-columns: 32px 1fr;
+    grid-template-areas:
+      "letter input"
+      "toggle toggle";
+    gap: 8px;
+    padding: 10px;
+  }
+  .choice-row .choice-letter {
+    grid-area: letter;
+  }
+  .choice-row input[type="text"] {
+    grid-area: input;
+    width: 100%;
+  }
+  .choice-row .truth-toggle {
+    grid-area: toggle;
+    width: 100%;
+    padding: 9px;
+    font-size: 0.85rem;
+  }
+  .choice-error {
+    grid-column: 1 / -1;
+  }
+
+  .file-upload-zone {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .file-upload-zone .btn {
+    width: 100%;
+  }
+  .question-image-preview-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Take exam & Question view */
+  .question-card {
+    padding: 16px 12px;
+  }
+  .question-statement {
+    font-size: 1.1rem;
+  }
+  .answer {
+    padding: 12px 12px;
+    gap: 10px;
+  }
+  .answer-letter {
+    width: 26px;
+    height: 26px;
+    font-size: 0.8rem;
+  }
+  .answer-label {
+    font-size: 0.95rem;
+  }
+  .pager {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .pager .btn {
+    width: 100%;
+  }
+  .navigator {
+    grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+    gap: 5px;
+  }
+
+  /* Result screen */
+  .result-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 14px;
+    gap: 16px;
+  }
+  .result-summary .row {
+    justify-content: center;
+  }
+  .result-summary h1 {
+    font-size: 1.8rem;
+  }
+  .result-actions {
+    width: 100%;
+  }
+  .result-actions .btn {
+    width: 100%;
+  }
+
+  /* Modals on mobile */
+  .modal-backdrop {
+    padding: 8px;
+    align-items: flex-end;
+  }
+  .modal {
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+  .modal-header {
+    padding: 14px 16px;
+  }
+  .modal-body {
+    padding: 16px 14px;
+  }
+  .modal-footer {
+    padding: 12px 14px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  /* Auth page */
+  .auth-page {
+    padding: 12px;
+  }
+  .auth-card {
+    padding: 22px 16px;
+  }
+
+  /* Badge sheet & QR cards */
+  .badge-sheet {
+    grid-template-columns: 1fr;
+  }
+  .qr-badge {
+    padding: 16px 12px;
+  }
+  .whatsapp-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .meta {
+    grid-template-columns: 1fr;
+  }
+  .progress-line {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .progress {
+    width: 100%;
+    max-width: 100%;
+  }
+  .timer-digits {
+    font-size: 0.9em;
+  }
+  .timer-unit b {
+    font-size: 1.5rem;
+  }
 }

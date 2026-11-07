@@ -92,4 +92,10 @@ describe('QuizAdminService', () => {
     const service = new QuizAdminService(fakeQuizzes, fakeQuestions([{ id: 'q' } as Question]), assignments(['u1']));
     await expect(service.launch('z')).resolves.toBeUndefined();
   });
+
+  it('délègue le téléversement d image au dépôt', async () => {
+    const service = new QuizAdminService(fakeQuizzes, fakeQuestions([]), assignments([]));
+    const fakeFile = new File(['fake content'], 'test.png', { type: 'image/png' });
+    await expect(service.uploadQuestionImage(fakeFile)).resolves.toBe('https://example.com/fake.png');
+  });
 });

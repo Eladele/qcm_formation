@@ -59,6 +59,18 @@ describe('Règles de question', () => {
     expect(QuestionDraftFactory.canToggleCorrect(d, 3)).toBe(false);
     expect(QuestionDraftFactory.canToggleCorrect(d, 0)).toBe(true);
   });
+
+  it('gère les images et la durée individuelle par question', () => {
+    let d = QuestionDraftFactory.empty();
+    d = QuestionDraftFactory.withImageUrl(d, 'https://example.com/schema.png');
+    d = QuestionDraftFactory.withDurationSeconds(d, 90);
+    expect(d.imageUrl).toBe('https://example.com/schema.png');
+    expect(d.durationSeconds).toBe(90);
+
+    const normalized = QuestionDraftFactory.normalize(d);
+    expect(normalized.imageUrl).toBe('https://example.com/schema.png');
+    expect(normalized.durationSeconds).toBe(90);
+  });
 });
 
 describe('Stratégies de notation', () => {
