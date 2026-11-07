@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="366.794026pt" height="293.021969pt" viewBox="0 0 366.794026 293.021969" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-07T17:41:18.643848</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 293.021969 
+L 366.794026 293.021969 
+L 366.794026 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 187.394716 256.719569 
+C 214.438968 256.719569 240.403222 245.964823 259.526396 226.841649 
+C 278.64957 207.718475 289.404316 181.754221 289.404316 154.709969 
+C 289.404316 127.665717 278.64957 101.701463 259.526396 82.578289 
+C 240.403222 63.455115 214.438968 52.700369 187.394716 52.700369 
+L 187.394716 154.709969 
+z
+" style="fill: #4f46e5; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 85.385116 154.709969 
+C 85.385116 181.754221 96.139862 207.718475 115.263036 226.841649 
+C 134.38621 245.964823 160.350464 256.719569 187.394716 256.719569 
+L 187.394716 154.709969 
+z
+" style="fill: #22a06b; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 127.434978 72.182469 
+C 114.411914 81.644278 103.81156 94.055699 96.503497 108.398579 
+C 89.195434 122.74146 85.385116 138.612577 85.385116 154.709969 
+L 187.394716 154.709969 
+z
+" style="fill: #f59e0b; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 187.394716 52.700369 
+C 176.690379 52.700369 166.052446 54.385252 155.872016 57.693074 
+C 145.691586 61.000896 136.094968 65.890617 127.434978 72.182469 
+L 187.394716 154.709969 
+z
+" style="fill: #e11d74; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="text_1">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #1f2333" x="299.605276" y="157.827156" transform="rotate(-0 299.605276 157.827156)">Bus 50 %</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1f2333" x="108.049868" y="237.412473" transform="rotate(-0 108.049868 237.412473)">Vélo 25 %</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1f2333" x="87.414375" y="106.885097" transform="rotate(-0 87.414375 106.885097)">Voiture 15 %</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1f2333" x="152.719746" y="52.114041" transform="rotate(-0 152.719746 52.114041)">À pied 10 %</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #1f2333" x="187.394716" y="21.197969" transform="rotate(-0 187.394716 21.197969)">Moyen de transport des 40 élèves</text>
+   </g>
+  </g>
+ </g>
+</svg>
