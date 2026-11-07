@@ -30,7 +30,7 @@ export function createServices(): Services {
     session: new QuizSessionService(new SupabaseAttemptGateway(db)),
     candidates: new CandidateAdminService(
       new SupabaseCandidateRepository(db),
-      (import.meta.env.VITE_PUBLIC_APP_URL as string | undefined) ?? window.location.origin,
+      (import.meta.env.API_KEY as string | undefined) ?? window.location.origin,
     ),
   };
 }
